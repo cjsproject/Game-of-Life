@@ -2,54 +2,41 @@ import random as r
 import tkinter as tk
 import time
 
+
+# Setting up the tkinter scene, might be a bit messy
 root = tk.Tk()
 root.title("Conway's Game of Life")
-size = 500
+size = 500 # sets the image size (square)
 
 label1 = tk.Label(root, text="Game of Life, Pixelized")
-label1.pack()  # packs in order of compilation, label first, then grid
+label1.pack()  # packs in order of compilation, label first, then Image
 
-c = tk.Canvas(root, height=size, width=size, bg='white')
+c = tk.Canvas(root, height=size, width=size, bg='white') # canvas created with image size
 c.pack(fill=tk.BOTH, expand=True)
 
 img = tk.PhotoImage(width=size, height=size)
 
-c.create_image((size/2, size/2), image=img, state='normal')
-
+c.create_image((size/2, size/2), image=img, state='normal')# image created at center of screen
 
 root.resizable(0, 0)
 
-dim = 500
+dim = size
 
+#original generation, randomly generated
 arr = [[r.randrange(2) for i in range(dim)] for j in range(dim)]
-
-print(arr)
 
 
 def showGrid():
+    # list comprehension in parallel to initial list (arr),
+    # if the cell is alive, its black, white if dead.
     grid = [["#000000" if arr[i][j] == 1 else "#ffffff" for i in range(dim)]for j in range(dim)]
-    #print(grid, end='\n')
     img.put(grid)
-    #for i in range(dim):
-    #    for j in range(dim):
-    #        img.put(grid[i*j+j], (i, j))
-    """
-    for i in range(dim):
-        for j in range(dim):
-            print(arr[i][j], end=' ')
-            if arr[i][j] == 1:
-                img.put('#000000', (i, j))
-            else:
-                img.put('#ffffff', (i, j))
-        print()
-        grid = grid + '\n'
-        img.put(grid)
-
-    print()
-    return grid
-    """
 
 
+# gol rules,
+# live cells: less that two neighbors it dies, as if by loneliness
+# 2-3 neighbors, it lives, and more than 3 neighbors, it dies from overpopulation
+# if the cell is dead, if it has 3 neighbors exactly it will live as if by reproduction
 def checkRules(n, cell=1):
     if cell == 1 and n < 2:
         return 0
@@ -62,7 +49,9 @@ def checkRules(n, cell=1):
     else:
         return cell
 
-
+# game of life engine, calculates next generation from initial
+# using rules, updates the image per-generation.
+# currently skips edges, may update in the future
 def gol():
     L = 0
     showGrid()
@@ -88,8 +77,9 @@ def gol():
                     neighbors = x + y + z
                     nextGen[i][j] = checkRules(neighbors, arr[i][j])
 
-        #arrayLabel.configure(text=showGrid())
-        #arrayLabel.update()
+
+        # updates image after creating new generation,
+        # and puts pixels on the grid
         img.blank()
         showGrid()
         c.update()
