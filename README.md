@@ -6,6 +6,9 @@ Current:
 
 * [x] - Display by updating arrays of strings on a tkinter canvas.
 
+* [x] - Display by updating image pixels on a tkinter canvas
+
+
 Future to-do:
 
-* [ ] - Display by updating image pixels on a tkinter canvas
+* [ ] - create color identification by generation
