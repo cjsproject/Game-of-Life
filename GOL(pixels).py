@@ -3,17 +3,23 @@ import tkinter as tk
 import time
 
 root = tk.Tk()
-root.title("Memory Maze")
+root.title("Conway's Game of Life")
+size = 500
 
-label1 = tk.Label(root, text="game of Life")
+label1 = tk.Label(root, text="Game of Life, Pixelized")
 label1.pack()  # packs in order of compilation, label first, then grid
 
-c = tk.Canvas(root, height=350, width=350, bg='white')
+c = tk.Canvas(root, height=size, width=size, bg='white')
 c.pack(fill=tk.BOTH, expand=True)
+
+img = tk.PhotoImage(width=size, height=size)
+
+c.create_image((size/2, size/2), image=img, state='normal')
+
 
 root.resizable(0, 0)
 
-dim = 25
+dim = 500
 
 arr = [[r.randrange(2) for i in range(dim)] for j in range(dim)]
 
@@ -21,15 +27,27 @@ print(arr)
 
 
 def showGrid():
-    grid = ''
+    grid = [["#000000" if arr[i][j] == 1 else "#ffffff" for i in range(dim)]for j in range(dim)]
+    #print(grid, end='\n')
+    img.put(grid)
+    #for i in range(dim):
+    #    for j in range(dim):
+    #        img.put(grid[i*j+j], (i, j))
+    """
     for i in range(dim):
         for j in range(dim):
             print(arr[i][j], end=' ')
-            grid = grid + str(arr[i][j]) + ' '
+            if arr[i][j] == 1:
+                img.put('#000000', (i, j))
+            else:
+                img.put('#ffffff', (i, j))
         print()
         grid = grid + '\n'
+        img.put(grid)
+
     print()
     return grid
+    """
 
 
 def checkRules(n, cell=1):
@@ -47,10 +65,9 @@ def checkRules(n, cell=1):
 
 def gol():
     L = 0
-    arrayLabel = tk.Label(c, text=showGrid())
-    arrayLabel.pack()
+    showGrid()
     while True:
-        if L == 10:
+        if L == 100:
             break
         nextGen = arr[:]
         for i in range(len(nextGen)):
@@ -71,8 +88,11 @@ def gol():
                     neighbors = x + y + z
                     nextGen[i][j] = checkRules(neighbors, arr[i][j])
 
-        arrayLabel.configure(text=showGrid())
-        arrayLabel.update()
+        #arrayLabel.configure(text=showGrid())
+        #arrayLabel.update()
+        img.blank()
+        showGrid()
+        c.update()
         time.sleep(0.5)
         L += 1
 
