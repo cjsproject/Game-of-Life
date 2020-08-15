@@ -83,7 +83,7 @@ def gol():
         img.blank()
         showGrid()
         c.update()
-        time.sleep(0.5)
+        #time.sleep(0.25)
         L += 1
 
 
