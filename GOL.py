@@ -50,7 +50,7 @@ def gol():
     arrayLabel = tk.Label(c, text=showGrid())
     arrayLabel.pack()
     while True:
-        if L == 10:
+        if L == 100:
             break
         nextGen = arr[:]
         for i in range(len(nextGen)):

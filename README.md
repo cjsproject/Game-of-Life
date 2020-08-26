@@ -8,6 +8,8 @@ Current:
 
 * [x] - Display by updating image pixels on a tkinter canvas
 
+* [x] - OOP cleanup
+
 
 Future to-do:
 

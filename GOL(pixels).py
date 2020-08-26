@@ -1,36 +1,14 @@
+from GUI import GUI
+
 import random as r
 import tkinter as tk
 import time
 
 
-# Setting up the tkinter scene, might be a bit messy
-root = tk.Tk()
-root.title("Conway's Game of Life")
-size = 500 # sets the image size (square)
-
-label1 = tk.Label(root, text="Game of Life, Pixelized")
-label1.pack()  # packs in order of compilation, label first, then Image
-
-c = tk.Canvas(root, height=size, width=size, bg='white') # canvas created with image size
-c.pack(fill=tk.BOTH, expand=True)
-
-img = tk.PhotoImage(width=size, height=size)
-
-c.create_image((size/2, size/2), image=img, state='normal')# image created at center of screen
-
-root.resizable(0, 0)
-
-dim = size
+dim = GUI.size
 
 #original generation, randomly generated
 arr = [[r.randrange(2) for i in range(dim)] for j in range(dim)]
-
-
-def showGrid():
-    # list comprehension in parallel to initial list (arr),
-    # if the cell is alive, its black, white if dead.
-    grid = [["#000000" if arr[i][j] == 1 else "#ffffff" for i in range(dim)]for j in range(dim)]
-    img.put(grid)
 
 
 # gol rules,
@@ -53,8 +31,9 @@ def checkRules(n, cell=1):
 # using rules, updates the image per-generation.
 # currently skips edges, may update in the future
 def gol():
+    window = GUI()
     L = 0
-    showGrid()
+    window.showGrid(arr)
     while True:
         if L == 100:
             break
@@ -80,12 +59,9 @@ def gol():
 
         # updates image after creating new generation,
         # and puts pixels on the grid
-        img.blank()
-        showGrid()
-        c.update()
+        window.updateImage()
         #time.sleep(0.25)
         L += 1
 
 
 gol()
-root.mainloop()
