@@ -1,3 +1,3 @@
-from GUI import GUI
-from Cell import Cell
+from source.GUI import GUI
+from source.Cell import Cell
 

@@ -1,5 +1,5 @@
 import tkinter as tk
-from Globals import side, startCells
+from source.Globals import side, startCells
 
 class GUI:
     # Setting up the tkinter scene, might be a bit messy
@@ -19,7 +19,6 @@ class GUI:
 
         self.setStage(root, size, c)
         self.showGrid()
-        self.runMainLoop()
 
     def setStage(self, root, size, c):
         tk.Label(root, text="Game of Life, Pixelized").pack()  # packs in order of compilation, label first, then Image
@@ -40,6 +39,3 @@ class GUI:
 
     def runMainLoop(self):
         self.root.mainloop()
-
-
-GUI()
