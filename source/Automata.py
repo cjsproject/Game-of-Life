@@ -1,32 +1,20 @@
 from source.GUI import GUI
 from source.Globals import startCells
+from source.Rules import checkRules
 
 
-class Cell:
+class Automata:
     window = GUI()
     side = GUI.size
-    #startCells = startCells
     nextGen = startCells[:]
 
     def __init__(self):
-        print(startCells)
         self.mainGen()
 
     # gol rules,
     # live cells: less that two neighbors it dies, as if by loneliness
     # 2-3 neighbors, it lives, and more than 3 neighbors, it dies from overpopulation
     # if the cell is dead, if it has 3 neighbors exactly it will live as if by reproduction
-    def checkRules(self, n, cell):
-        if cell == 1 and n < 2:
-            return 0
-        elif cell == 1 and (n == 3 or n == 2):
-            return 1
-        elif cell == 1 and n > 3:
-            return 0
-        elif cell == 0 and n == 3:
-            return 1
-        else:
-            return cell
 
     def handleHorizontal(self, cells, i):
         if i == 0:
@@ -60,7 +48,7 @@ class Cell:
                     y = sum(arr[i + 1][j - 1:j + 1])
                     z = arr[i][j - 1] + arr[i][j + 1]
                     neighbors = x + y + z
-                    nextGen[i][j] = self.checkRules(neighbors, arr[i][j])
+                    nextGen[i][j] = checkRules(neighbors, arr[i][j])
 
 
 
@@ -80,6 +68,3 @@ class Cell:
 
     def __str__(self):
         pass
-
-
-Cell()

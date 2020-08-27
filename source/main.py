@@ -1,3 +1,4 @@
-from source.GUI import GUI
-from source.Cell import Cell
+from source.Automata import Automata
 
+if __name__ == '__main__':
+    Automata()
